@@ -1,0 +1,376 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Essential JS 2 : Grid Component</title>
+            <!-- Essential JS 2 material theme -->
+            <link href="https://cdn.syncfusion.com/ej2/ej2-base/styles/material.css" rel="stylesheet">
+            <link href="https://cdn.syncfusion.com/ej2/ej2-grids/styles/material.css" rel="stylesheet">
+            <link href="https://cdn.syncfusion.com/ej2/ej2-buttons/styles/material.css" rel="stylesheet">
+            <link href="https://cdn.syncfusion.com/ej2/ej2-popups/styles/material.css" rel="stylesheet">
+            <link href="https://cdn.syncfusion.com/ej2/ej2-navigations/styles/material.css" rel="stylesheet">
+            <link href="https://cdn.syncfusion.com/ej2/ej2-dropdowns/styles/material.css" rel="stylesheet">
+            <link href="https://cdn.syncfusion.com/ej2/ej2-lists/styles/material.css" rel="stylesheet">
+            <link href="https://cdn.syncfusion.com/ej2/ej2-inputs/styles/material.css" rel="stylesheet">
+            <link href="https://cdn.syncfusion.com/ej2/ej2-calendars/styles/material.css" rel="stylesheet">
+            <link href="https://cdn.syncfusion.com/ej2/ej2-splitbuttons/styles/material.css" rel="stylesheet">
+            <!-- Global scripts -->
+            <script src="https://ej2.syncfusion.com/16.3.17-beta/javascript/demos/dist/ej2.min.js" type="text/javascript"></script>
+            <script src="data.js"></script>
+            <script>
+            function mclick(args) {
+                if (args.innerHTML === 'Mouse') {
+                    if (document.body.classList.contains('e-bigger')) {
+                        document.body.classList.remove('e-bigger');
+                    }
+                } else {
+                    if (!document.body.classList.contains('e-bigger')) {
+                        document.body.classList.add('e-bigger');
+                    }
+                }
+            }
+        </script>
+        <script id="template" type="text/x-template">
+            <div class="image">
+                <img src="./images/${EmployeeID}.png" alt="${EmployeeID}" />
+            </div>
+        </script>
+</head>
+<body>
+    <button class="e-btn" onclick="mclick(this)">Mouse</button>
+    <button class="e-btn" onclick="mclick(this)">Touch</button>
+    <h3>Filtered & CheckBox & multisorting Grid</h3>
+    <button class="e-btn" onclick="filterclick(this)">CheckBox</button>
+    <button class="e-btn" onclick="filterclick(this)">Excel</button>
+    <button class="e-btn" onclick="filterclick(this)">Menu</button>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id='Grid4'></div>
+            </div>
+        </div>
+    </div>
+    <br/><br/>
+    <h3>Empty Grid</h3>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id='Grid'></div>
+            </div>
+        </div>
+    </div>
+    <br/><br/>
+    <h3>Default Grid & Reorder & Resize & ColumnMenu & Context Menu Grid</h3>
+    <button class="e-btn" onclick="editclick(this)">Inline</button>
+    <button class="e-btn" onclick="editclick(this)">Dialog</button>
+    <button class="e-btn" onclick="editclick(this)">Batch</button>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id='Grid1'></div>
+            </div>
+        </div>
+    </div>
+    <br/><br/>
+    <h3>Groupped Grid</h3>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id='Grid2'></div>
+            </div>
+        </div>
+    </div>
+    <br/><br/>
+    <h3>Column Template</h3>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id='Grid3'></div>
+            </div>
+        </div>
+    </div>
+    <br/><br/>
+    <h3>Aggregate Grid</h3>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id='Grid5'></div>
+            </div>
+        </div>
+    </div>
+    <br/><br/>
+
+    <h3>Hierarchy Grid</h3>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id='Grid6'></div>
+            </div>
+        </div>
+    </div>
+    <br/><br/>
+
+    <h3>Stacked Header Grid</h3>
+    <div class="content-container-fluid">
+        <div class="row">
+            <div class="cols-sample-area">
+                <div id='Grid8'></div>
+            </div>
+        </div>
+    </div>
+    <br/><br/>
+   
+
+    <script type="text/javascript">
+
+        // Initialize Essential JS 2 JavaScript Grid component
+        var grid = new ej.grids.Grid({dataSource: [], 
+            allowPaging: true,
+            pageSettings: {pageSize: 4, pageSizes: true},
+            toolbar: ['Add', 'Delete', 'Cancel', 'Update', 'Edit', 'ColumnChooser', 'Search', 'PdfExport', 'ExcelExport', 'CsvExport', 'WordExport', 'Print'],
+            columns: [
+            { field: 'OrderID', headerText: 'Order ID', width: 120, textAlign: 'Left', type: 'number', validationRules: { required: true }, isPrimaryKey: true },
+            { field: 'EmployeeID', headerText: 'Employee ID', width: 120, textAlign: 'Left', type: 'number', validationRules: { required: true } },
+            { field: 'Freight', headerText: 'Freight', width: 120, textAlign: 'Left', format: 'C2', validationRules: { required: true }, editType: 'numericedit' },
+            { field: 'ShipName', headerText: 'Ship Name', width: 120, textAlign: 'Left' },
+            { field: 'OrderDate', headerText: 'Order Date', width: 120, format: 'yMd', editType: 'datepickeredit' },
+            { field: 'ShipCountry', headerText: 'Ship Country', width: 120, edit: { params: { popupHeight: '300px' } }, editType: 'dropdownedit', textAlign: 'Left' },
+            { field: 'Verified', headerText: 'Verified', width: 120, type: 'boolean', editType: 'booleanedit', displayAsCheckBox: true, textAlign: 'Center' }
+        ]});
+        grid.appendTo('#Grid');
+        var grid1 = new ej.grids.Grid({
+            dataSource: window.OrderData,
+            allowPaging: true,
+            allowFiltering: true,
+            allowSorting: true,
+            allowGrouping: true,
+            allowReordering: true,
+            allowResizing: true,
+            showColumnMenu: true,
+            allowPdfExport: true,
+            allowExcelExport: true,
+            allowCsvExport: true,
+            contextMenuItems: ['AutoFit', 'AutoFitAll', 'SortAscending', 'SortDescending', 'Copy', 'Edit', 'Delete', 'Save', 'Cancel', 'PdfExport', 'ExcelExport', 'CsvExport', 'FirstPage', 'PrevPage', 'LastPage', 'NextPage'],
+            pageSettings: {pageSize: 10, pageCount: 4, pageSizes: true},
+            showColumnChooser: true,
+            toolbar: ['Add', 'Delete', 'Cancel', 'Update', 'Edit', 'ColumnChooser', 'Search', 'PdfExport', 'ExcelExport', 'CsvExport', 'WordExport', 'Print'],
+            editSettings: {allowAdding: true, allowEditing: true, allowDeleting: true},
+            columns: [
+            { field: 'OrderID', headerText: 'Order ID', width: 120, textAlign: 'Left', type: 'number', validationRules: { required: true }, isPrimaryKey: true },
+            { field: 'EmployeeID', headerText: 'Employee ID', width: 120, textAlign: 'Left', type: 'number', validationRules: { required: true } },
+            { field: 'Freight', headerText: 'Freight', width: 120, textAlign: 'Left', format: 'C2', validationRules: { required: true }, editType: 'numericedit' },
+            { field: 'ShipName', headerText: 'Ship Name', width: 120, textAlign: 'Left' },
+            { field: 'OrderDate', headerText: 'Order Date', width: 120, format: 'yMd', editType: 'datepickeredit' },
+            { field: 'ShipCountry', headerText: 'Ship Country', width: 120, edit: { params: { popupHeight: '300px' } }, editType: 'dropdownedit', textAlign: 'Left' },
+            { field: 'Verified', headerText: 'Verified', width: 120, type: 'boolean', editType: 'booleanedit', displayAsCheckBox: true, textAlign: 'Center' },
+            { headerText: 'Manage Records', width: 160, commands: [
+                { type: 'Edit', buttonOption: { iconCss: ' e-icons e-edit', cssClass: 'e-flat' } },
+                { type: 'Delete', buttonOption: { iconCss: 'e-icons e-delete', cssClass: 'e-flat' } },
+                { type: 'Save', buttonOption: { iconCss: 'e-icons e-update', cssClass: 'e-flat' } },
+                { type: 'Cancel', buttonOption: { iconCss: 'e-icons e-cancel-icon', cssClass: 'e-flat' } }] }
+        ]});
+        grid1.appendTo('#Grid1')
+        grid1.toolbarClick = function(args) {
+            if (args.item.id === 'Grid_pdfexport') {
+                grid1.pdfExport(); 
+            }
+            if(args.item.id === 'Grid_excelexport') {
+                grid1.excelExport();
+            }
+            if (args.item.id === 'Grid_csvexport') {
+                grid1.csvExport();
+            }
+        };
+        function editclick(args) {
+            if(args.innerHTML == 'Inline'){
+                grid1.editSettings = {allowAdding: true, allowEditing: true, allowDeleting: true};
+            } else if(args.innerHTML == 'Dialog') {
+                grid1.editSettings = {allowAdding: true, allowEditing: true, allowDeleting: true, mode: 'Dialog'};
+            } else {
+                grid1.editSettings = {allowAdding: true, allowEditing: true, allowDeleting: true, mode: 'Batch'};
+            }
+        }
+        var grid2 = new ej.grids.Grid({
+            dataSource: window.OrderData,
+            allowPaging: true,
+            allowFiltering: true,
+            allowReordering: true,
+            allowSorting: true,
+            allowGrouping: true, 
+            pageSettings: {pageSize: 10, pageCount: 4, pageSizes: true},
+            groupSettings: {columns: ["ShipName"], showToggleButton: true, showUngroupButton: true},
+            showColumnChooser: true,
+           // toolbar: ['Add', 'Delete', 'Cancel', 'Update', 'Edit', 'ColumnChooser', 'Search', 'PdfExport', 'ExcelExport', 'CsvExport', 'WordExport', 'Print'],
+            editSettings: {allowAdding: true, allowEditing: true, allowDeleting: true},
+            columns: [
+            { field: 'OrderID', headerText: 'Order ID', width: 120, textAlign: 'Left', type: 'number', validationRules: { required: true }, isPrimaryKey: true },
+            { field: 'EmployeeID', headerText: 'Employee ID', width: 120, textAlign: 'Left', type: 'number', validationRules: { required: true } },
+            { field: 'Freight', headerText: 'Freight', width: 120, textAlign: 'Left', format: 'C2', validationRules: { required: true }, editType: 'numericedit' },
+            { field: 'ShipName', headerText: 'Ship Name', width: 120, textAlign: 'Left' },
+            { field: 'OrderDate', headerText: 'Order Date', width: 120, format: 'yMd', editType: 'datepickeredit' },
+            { field: 'ShipCountry', headerText: 'Ship Country', width: 120, edit: { params: { popupHeight: '300px' } }, editType: 'dropdownedit', textAlign: 'Left' },
+            { field: 'Verified', headerText: 'Verified', width: 120, type: 'boolean', editType: 'booleanedit', displayAsCheckBox: true, textAlign: 'Center' }
+        ]});
+        grid2.appendTo('#Grid2')
+        var grid3 = new ej.grids.Grid({
+            dataSource: window.employeeData,
+            allowPaging: true,
+            allowFiltering: true,
+            pageSettings: {pageSize: 4, pageSizes: true},
+            allowSorting: true,
+            showColumnChooser: true,
+            allowReordering: true,
+            //toolbar: ['Add', 'Delete', 'Cancel', 'Update', 'Edit', 'ColumnChooser', 'Search', 'PdfExport', 'ExcelExport', 'CsvExport', 'WordExport', 'Print'],
+            editSettings: {allowAdding: true, allowEditing: true, allowDeleting: true},
+            columns: [ 
+                { headerText: 'Employee Image', textAlign: 'Center', template: '#template', width: 180 }, 
+                { field: 'EmployeeID', headerText: 'Employee ID', textAlign: 'Right', width: 125 }, 
+                { field: 'FirstName', headerText: 'Name', width: 120 }, 
+                { field: 'Title', headerText: 'Title', width: 170 }, 
+                { field: 'HireDate', headerText: 'Hire Date', textAlign: 'Right', width: 135, format: { skeleton: 'yMd', type: 'date' } }, 
+                { field: 'ReportsTo', headerText: 'Reports To', width: 120, textAlign: 'Right' } ],    
+        });
+        grid3.appendTo('#Grid3')
+        var grid4 = new ej.grids.Grid({
+            dataSource: window.OrderData,
+            allowPaging: true,
+            allowFiltering: true,
+            allowReordering: true,
+            allowSorting: true,
+            pageSettings: {pageSize: 10, pageCount: 4, pageSizes: true},
+            showColumnChooser: true,
+            filterSettings: {type: 'CheckBox'},
+           // toolbar: ['Add', 'Delete', 'Cancel', 'Update', 'Edit', 'ColumnChooser', 'Search', 'PdfExport', 'ExcelExport', 'CsvExport', 'WordExport', 'Print'],
+            editSettings: {allowAdding: true, allowEditing: true, allowDeleting: true},
+            columns: [
+                { type: 'checkbox', width: 50 },
+                { field: 'OrderID', headerText: 'Order ID', width: 120, textAlign: 'Left', type: 'number', validationRules: { required: true }, isPrimaryKey: true },
+                { field: 'EmployeeID', headerText: 'Employee ID', width: 120, textAlign: 'Left', type: 'number', validationRules: { required: true } },
+                { field: 'Freight', headerText: 'Freight', width: 120, textAlign: 'Left', format: 'C2', validationRules: { required: true }, editType: 'numericedit' },
+                { field: 'ShipName', headerText: 'Ship Name', width: 120, textAlign: 'Left' },
+                { field: 'OrderDate', headerText: 'Order Date', width: 120, format: 'yMd', editType: 'datepickeredit' },
+                { field: 'ShipCountry', headerText: 'Ship Country', width: 120, edit: { params: { popupHeight: '300px' } }, editType: 'dropdownedit', textAlign: 'Left' },
+                { field: 'Verified', headerText: 'Verified', width: 120, type: 'boolean', editType: 'booleanedit', displayAsCheckBox: true, textAlign: 'Center' }
+            ]
+        });
+        grid4.appendTo('#Grid4');
+        function filterclick(args) {
+            if (args.innerHTML == 'CheckBox') {
+                grid4.filterSettings = {type: 'CheckBox'};
+            } else if(args.innerHTML == 'Excel') {
+                grid4.filterSettings = {type: 'Excel'};
+            } else {
+                grid4.filterSettings = {type: 'Menu'};
+            }
+        }
+
+        var grid5 = new ej.grids.Grid({
+            dataSource: window.OrderData,
+            allowPaging: true,
+            allowFiltering: true,
+            allowReordering: true,
+            pageSettings: {pageSize: 10, pageCount: 4, pageSizes: true},
+            allowSorting: true,
+            showColumnChooser: true,
+            allowGrouping: true,
+            groupSettings: {columns: ["ShipName"], showToggleButton: true, showUngroupButton: true},
+            filterSettings: {type: 'CheckBox'},
+            aggregates: [{ 
+                columns: [
+                    { type: 'Sum', field: 'Freight', format: 'C2', footerTemplate: 'Sum: ${Sum}' }
+                ] }, {
+                columns: [
+                    { type: 'Average', field: 'Freight', format: 'C2', footerTemplate: 'Average: ${Average}' }],
+                columns: [
+                    { type: 'Sum', field: 'Freight', groupFooterTemplate: 'Total units: ${Sum}' }, 
+                    { type: 'TrueCount', field: 'Verified', groupFooterTemplate: 'Discontinued: ${TrueCount}' },
+                    { type: 'Max', field: 'Freight', groupCaptionTemplate: 'Maximum: ${Max}' }]
+            }],
+            //toolbar: ['Add', 'Delete', 'Cancel', 'Update', 'Edit', 'ColumnChooser', 'Search', 'PdfExport', 'ExcelExport', 'CsvExport', 'WordExport', 'Print'],
+            editSettings: {allowAdding: true, allowEditing: true, allowDeleting: true},
+            columns: [
+                { field: 'OrderID', headerText: 'Order ID', width: 120, textAlign: 'Left', type: 'number', validationRules: { required: true }, isPrimaryKey: true },
+                { field: 'EmployeeID', headerText: 'Employee ID', width: 120, textAlign: 'Left', type: 'number', validationRules: { required: true } },
+                { field: 'Freight', headerText: 'Freight', width: 120, textAlign: 'Left', format: 'C2', validationRules: { required: true }, editType: 'numericedit' },
+                { field: 'ShipName', headerText: 'Ship Name', width: 120, textAlign: 'Left' },
+                { field: 'OrderDate', headerText: 'Order Date', width: 120, format: 'yMd', editType: 'datepickeredit' },
+                { field: 'ShipCountry', headerText: 'Ship Country', width: 120, edit: { params: { popupHeight: '300px' } }, editType: 'dropdownedit', textAlign: 'Left' },
+                { field: 'Verified', headerText: 'Verified', width: 120, type: 'boolean', editType: 'booleanedit', displayAsCheckBox: true, textAlign: 'Center' }
+            ]
+        });
+        grid5.appendTo('#Grid5');
+        var grid6 = new ej.grids.Grid({
+            dataSource: window.employeeData,
+            allowPaging: true,
+            allowFiltering: true,
+            allowReordering: true,
+            pageSettings: {pageSize: 10, pageCount: 4, pageSizes: true},
+            allowSorting: true,
+            showColumnChooser: true,
+            allowGrouping: true,
+            //groupSettings: {columns: ["ShipName"], showToggleButton: true, showUngroupButton: true},
+            filterSettings: {type: 'CheckBox'},
+            //toolbar: ['Add', 'Delete', 'Cancel', 'Update', 'Edit', 'ColumnChooser', 'Search', 'PdfExport', 'ExcelExport', 'CsvExport', 'WordExport', 'Print'],
+            editSettings: {allowAdding: true, allowEditing: true, allowDeleting: true},
+
+            columns: [
+                { field: 'EmployeeID', headerText: 'Employee ID', textAlign: 'Right', width: 125 }, 
+                { field: 'FirstName', headerText: 'Name', width: 120 }, 
+                { field: 'Title', headerText: 'Title', width: 170 }, 
+                { field: 'HireDate', headerText: 'Hire Date', textAlign: 'Right', width: 135, format: { skeleton: 'yMd', type: 'date' } }, 
+                { field: 'ReportsTo', headerText: 'Reports To', width: 120, textAlign: 'Right' }
+            ],
+            childGrid: { 
+                dataSource: OrderData,
+                queryString: 'EmployeeID',
+                allowPaging: true,
+                pageSettings: {pageSize: 5, pageCount: 4, pageSizes: true},
+                columns: [ 
+                    { field: 'OrderID', headerText: 'Order ID', textAlign: 'Right', width: 120 },
+                    { field: 'ShipCity', headerText: 'Ship City', width: 120 },
+                    { field: 'Freight', headerText: 'Freight', width: 120 },
+                    { field: 'ShipName', headerText: 'Ship Name', width: 150 } ]
+                }
+        });
+        grid6.appendTo('#Grid6');
+        var grid8 = new ej.grids.Grid({
+            dataSource: window.OrderData,
+            allowPaging: true,
+            allowFiltering: true,
+            allowReordering: true,
+            pageSettings: {pageSize: 10, pageCount: 4, pageSizes: true},
+            allowSorting: true,
+            showColumnChooser: true,
+            // frozenColumns: 2,
+            // frozenRows: 2,
+            // allowGrouping: true,
+            // height: 400,
+            // width: 600,
+            //groupSettings: {columns: ["ShipName"], showToggleButton: true, showUngroupButton: true},
+            filterSettings: {type: 'CheckBox'},
+            //toolbar: ['Add', 'Delete', 'Cancel', 'Update', 'Edit', 'ColumnChooser', 'Search', 'PdfExport', 'ExcelExport', 'CsvExport', 'WordExport', 'Print'],
+            editSettings: {allowAdding: true, allowEditing: true, allowDeleting: true},
+
+            columns: [ 
+            { field: 'OrderID', headerText: 'Order ID', textAlign: 'Right', width: 120 },
+            { headerText: 'Order Details', columns: [
+                { field: 'OrderDate', headerText: 'Order Date', textAlign: 'Right', width: 135, format: 'yMd' },
+                { field: 'Freight', headerText: 'Freight($)', textAlign: 'Right', width: 120, format: 'C2' }
+            ] },
+            { headerText: 'Ship Details', columns: [
+                { field: 'ShippedDate', headerText: 'Shipped Date', textAlign: 'Right', width: 145, format: 'yMd' },
+                { field: 'ShipCountry', headerText: 'Ship Country', width: 140 }, ] 
+            } ]
+        });
+        grid8.appendTo('#Grid8');
+    </script>
+    <style> 
+        .image img { 
+            height: 55px;
+            width: 55px; 
+            border-radius:
+            50px; box-shadow:
+            inset 0 0 1px #e0e0e0, inset 0 0 14px rgba(0,0,0,0.2); 
+        }
+    </style>
+</body>
+</html>
