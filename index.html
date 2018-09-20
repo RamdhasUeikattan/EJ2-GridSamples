@@ -38,9 +38,10 @@
 <body>
     <button class="e-btn" onclick="mclick(this)">Mouse</button>
     <button class="e-btn" onclick="mclick(this)">Touch</button>
-    <h3>Filtered & CheckBox Grid</h3>
+    <h3>Filtered & CheckBox & multisorting Grid</h3>
     <button class="e-btn" onclick="filterclick(this)">CheckBox</button>
     <button class="e-btn" onclick="filterclick(this)">Excel</button>
+    <button class="e-btn" onclick="filterclick(this)">Menu</button>
     <div class="content-container-fluid">
         <div class="row">
             <div class="cols-sample-area">
@@ -58,7 +59,7 @@
         </div>
     </div>
     <br/><br/>
-    <h3>Default Grid</h3>
+    <h3>Default Grid & Reorder & Resize & ColumnMenu & Context Menu Grid</h3>
     <button class="e-btn" onclick="editclick(this)">Inline</button>
     <button class="e-btn" onclick="editclick(this)">Dialog</button>
     <button class="e-btn" onclick="editclick(this)">Batch</button>
@@ -152,6 +153,12 @@
             allowSorting: true,
             allowGrouping: true,
             allowReordering: true,
+            allowResizing: true,
+            showColumnMenu: true,
+            allowPdfExport: true,
+            allowExcelExport: true,
+            allowCsvExport: true,
+            contextMenuItems: ['AutoFit', 'AutoFitAll', 'SortAscending', 'SortDescending', 'Copy', 'Edit', 'Delete', 'Save', 'Cancel', 'PdfExport', 'ExcelExport', 'CsvExport', 'FirstPage', 'PrevPage', 'LastPage', 'NextPage'],
             pageSettings: {pageSize: 10, pageCount: 4, pageSizes: true},
             showColumnChooser: true,
             toolbar: ['Add', 'Delete', 'Cancel', 'Update', 'Edit', 'ColumnChooser', 'Search', 'PdfExport', 'ExcelExport', 'CsvExport', 'WordExport', 'Print'],
@@ -163,7 +170,12 @@
             { field: 'ShipName', headerText: 'Ship Name', width: 120, textAlign: 'Left' },
             { field: 'OrderDate', headerText: 'Order Date', width: 120, format: 'yMd', editType: 'datepickeredit' },
             { field: 'ShipCountry', headerText: 'Ship Country', width: 120, edit: { params: { popupHeight: '300px' } }, editType: 'dropdownedit', textAlign: 'Left' },
-            { field: 'Verified', headerText: 'Verified', width: 120, type: 'boolean', editType: 'booleanedit', displayAsCheckBox: true, textAlign: 'Center' }
+            { field: 'Verified', headerText: 'Verified', width: 120, type: 'boolean', editType: 'booleanedit', displayAsCheckBox: true, textAlign: 'Center' },
+            { headerText: 'Manage Records', width: 160, commands: [
+                { type: 'Edit', buttonOption: { iconCss: ' e-icons e-edit', cssClass: 'e-flat' } },
+                { type: 'Delete', buttonOption: { iconCss: 'e-icons e-delete', cssClass: 'e-flat' } },
+                { type: 'Save', buttonOption: { iconCss: 'e-icons e-update', cssClass: 'e-flat' } },
+                { type: 'Cancel', buttonOption: { iconCss: 'e-icons e-cancel-icon', cssClass: 'e-flat' } }] }
         ]});
         grid1.appendTo('#Grid1')
         grid1.toolbarClick = function(args) {
@@ -253,8 +265,10 @@
         function filterclick(args) {
             if (args.innerHTML == 'CheckBox') {
                 grid4.filterSettings = {type: 'CheckBox'};
-            } else {
+            } else if(args.innerHTML == 'Excel') {
                 grid4.filterSettings = {type: 'Excel'};
+            } else {
+                grid4.filterSettings = {type: 'Menu'};
             }
         }
 
@@ -361,7 +375,7 @@
             allowPaging: true,
             allowFiltering: true,
             allowReordering: true,
-           pageSettings: {pageSize: 10, pageCount: 4, pageSizes: true},
+            pageSettings: {pageSize: 10, pageCount: 4, pageSizes: true},
             allowSorting: true,
             showColumnChooser: true,
             // frozenColumns: 2,
